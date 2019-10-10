@@ -110,7 +110,7 @@ namespace BranchPredictionSimulator
                                 break;
 
                             default:
-                                throw new Exception(string.Format("Unrecognised tag '{}' found in xml representation of the acquisition metadata. The file may be corrupt.", textReader.Name));
+                                throw new Exception(string.Format("Unrecognised tag '{0}' found in xml representation of the acquisition metadata. The file may be corrupt.", textReader.Name));
                         }
                     }
                 }

@@ -695,7 +695,7 @@ namespace ICSharpCode.SharpZipLib.BZip2
 					}
 				}
 				rNToGo--;
-				ch2 ^= (int)((rNToGo == 1) ? 1 : 0);
+				ch2 ^= (rNToGo == 1) ? 1 : 0;
 				i2++;
 				
 				currentChar  = ch2;
@@ -758,7 +758,7 @@ namespace ICSharpCode.SharpZipLib.BZip2
 		
 		void SetupRandPartC() 
 		{
-			if (j2 < (int)z) {
+			if (j2 < z) {
 				currentChar = ch2;
 				mCrc.Update(ch2);
 				j2++;
@@ -793,7 +793,7 @@ namespace ICSharpCode.SharpZipLib.BZip2
 		
 		void SetupNoRandPartC() 
 		{
-			if (j2 < (int)z) {
+			if (j2 < z) {
 				currentChar = ch2;
 				mCrc.Update(ch2);
 				j2++;

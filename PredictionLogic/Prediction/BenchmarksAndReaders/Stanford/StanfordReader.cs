@@ -3,7 +3,7 @@ using System.IO;
 
 namespace PredictionLogic.Prediction.BenchmarksAndReaders.Stanford
 {
-    class StanfordReader : ITraceReader
+    class StanfordReader : ITraceReader, IDisposable
     {
         StreamReader streamReader;
         int numberOfBranches;
@@ -19,7 +19,7 @@ namespace PredictionLogic.Prediction.BenchmarksAndReaders.Stanford
             {
                 streamReader = new StreamReader(folderPath + filename);
             }
-            catch (Exception e)
+            catch
             {
                 if (streamReader != null)
                 {
@@ -65,7 +65,7 @@ namespace PredictionLogic.Prediction.BenchmarksAndReaders.Stanford
                 branch.targetAddress = uint.Parse(splitLine[2]);
                 return branch;
             }
-            catch (Exception e)
+            catch
             {
                 return null;
             }
@@ -84,6 +84,31 @@ namespace PredictionLogic.Prediction.BenchmarksAndReaders.Stanford
             return numberOfBranches;
         }
 
+        #endregion
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    closeTrace();
+                }
+                disposedValue = true;
+            }
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            // GC.SuppressFinalize(this);
+        }
         #endregion
     }
 }

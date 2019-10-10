@@ -16,7 +16,7 @@ namespace BranchPredictionSimulator.Localization
         private LanguageInfo(string identifier, string pathToResource)
         {
             this.identifier = identifier;
-            this.pathToResourceFile = pathToResource;
+            pathToResourceFile = pathToResource;
             languagesById.Add(identifier, this);
         }
 

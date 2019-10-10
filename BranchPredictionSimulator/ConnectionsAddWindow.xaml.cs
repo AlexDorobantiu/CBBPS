@@ -30,7 +30,7 @@ namespace BranchPredictionSimulator
             }
             finally
             {
-                this.Hide();
+                Hide();
             }
         }
     }

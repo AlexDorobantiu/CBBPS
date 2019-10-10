@@ -30,13 +30,13 @@ namespace BranchPredictionSimulator.SimulationResultStructures
         public ResultListMessage(string message)
         {
             this.message = message;
-            this.isVisible = true;
+            isVisible = true;
         }
 
-        public ResultListMessage(string message, bool is_visible)
+        public ResultListMessage(string message, bool isVisible)
         {
             this.message = message;
-            this.isVisible = is_visible;
+            this.isVisible = isVisible;
         }
 
         //  INotifyPropertyChanged stuff

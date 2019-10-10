@@ -22,11 +22,11 @@ namespace BranchPredictionSimulator
 
         public void TCPProxy_MessagePosted(object sender, StringEventArgs e)
         {
-            if (this.Dispatcher.Thread.Equals(Thread.CurrentThread))
+            if (Dispatcher.Thread.Equals(Thread.CurrentThread))
                 ConnectionMessages.Add(e.message);
             else
             {
-                this.Dispatcher.BeginInvoke(
+                Dispatcher.BeginInvoke(
                   System.Windows.Threading.DispatcherPriority.Normal,
                   new Action(
                     delegate()

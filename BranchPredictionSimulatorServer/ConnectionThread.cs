@@ -117,8 +117,8 @@ namespace BranchPredictionSimulatorServer
                     switch (header)
                     {
                         case (byte)TrasmissionFlags.NewSession:
-                            this.simulationSession = (SimulationSession)formatter.Deserialize(networkStream);
-                            Console.WriteLine("Starting new session with " + clientName + " (session id: " + this.simulationSession.sessionID + ")");
+                            simulationSession = (SimulationSession)formatter.Deserialize(networkStream);
+                            Console.WriteLine("Starting new session with " + clientName + " (session id: " + simulationSession.sessionID + ")");
                             for (int i = 0; i < numberOfWorkerThreads; i++)
                             {
                                 workerThreads[i].abortCurrentTask();
@@ -130,7 +130,7 @@ namespace BranchPredictionSimulatorServer
                                 for (int i = 0; i < taskBufferCount; i++)
                                 {
                                     TaskPackage t = taskBuffer.Dequeue();
-                                    if (t.sessionID == this.simulationSession.sessionID)
+                                    if (t.sessionID == simulationSession.sessionID)
                                     {
                                         taskBuffer.Enqueue(t);
                                     }
@@ -140,7 +140,7 @@ namespace BranchPredictionSimulatorServer
 
                         case (byte)TrasmissionFlags.Task:
                             TaskPackage taskPackage = (TaskPackage)formatter.Deserialize(networkStream);
-                            if (this.simulationSession != null && taskPackage.sessionID == this.simulationSession.sessionID)
+                            if (simulationSession != null && taskPackage.sessionID == simulationSession.sessionID)
                             {
                                 lock (taskBuffer)
                                 {
@@ -160,7 +160,7 @@ namespace BranchPredictionSimulatorServer
 
                         case (byte)TrasmissionFlags.AbortSession:
                             uint sessionIdAborted = (uint)formatter.Deserialize(networkStream);
-                            if (this.simulationSession != null && sessionIdAborted == this.simulationSession.sessionID)
+                            if (simulationSession != null && sessionIdAborted == simulationSession.sessionID)
                             {
                                 for (int i = 0; i < numberOfWorkerThreads; i++)
                                 {
@@ -194,7 +194,7 @@ namespace BranchPredictionSimulatorServer
         {
             lock (networkStreamLocker)
             {
-                if (this.simulationSession == null)
+                if (simulationSession == null)
                 {
                     Console.WriteLine("Error: Cannot send result. No session is active at the moment. ");
                     return;
@@ -203,7 +203,7 @@ namespace BranchPredictionSimulatorServer
                 ResultPackage resultPackage = new ResultPackage
                 {
                     taskID = taskId,
-                    sessionID = this.simulationSession.sessionID,
+                    sessionID = simulationSession.sessionID,
                     result = result
                 };
 
@@ -224,7 +224,7 @@ namespace BranchPredictionSimulatorServer
         {
             lock (networkStreamLocker)
             {
-                if (this.simulationSession == null)
+                if (simulationSession == null)
                 {
                     Console.WriteLine("Error: Cannot send task request. No session is active at the moment. ");
                     return;
@@ -233,7 +233,7 @@ namespace BranchPredictionSimulatorServer
                 try
                 {
                     networkStream.WriteByte((byte)TrasmissionFlags.TaskRequest);
-                    formatter.Serialize(networkStream, this.simulationSession.sessionID);
+                    formatter.Serialize(networkStream, simulationSession.sessionID);
                     Console.WriteLine("Task request sent to " + clientName + ".");
                 }
                 catch (Exception e)

@@ -489,7 +489,7 @@ namespace PredictionLogic.Prediction.Predictors
             public void init(int numberOfBins)
             {
                 this.numberOfBins = numberOfBins;
-                this.maximumFrequency = 0;
+                maximumFrequency = 0;
             }
 
             public int find(int branchFrequency)
@@ -564,12 +564,12 @@ namespace PredictionLogic.Prediction.Predictors
             {
                 this.name = name;
                 this.numberOfTables = numberOfTables;
-                this.bimodalTableLength = 1 << bimodalTableLengthBits;
-                this.taggedTableLength = 1 << taggedTableLengthBits;
+                bimodalTableLength = 1 << bimodalTableLengthBits;
+                taggedTableLength = 1 << taggedTableLengthBits;
                 this.tagBits = tagBits;
                 this.counterBits = counterBits;
                 this.postPredictionCounterBits = postPredictionCounterBits;
-                this.postPredictionTableLength = 1 << (2 * counterBits + 1);
+                postPredictionTableLength = 1 << (2 * counterBits + 1);
                 bimodalTable = new sbyte[bimodalTableLength];
                 for (int i = 0; i < bimodalTableLength; i++)
                 {
@@ -589,7 +589,7 @@ namespace PredictionLogic.Prediction.Predictors
                 numberOfMispredictions = 0;
                 allocationFail = 0;
                 this.rampUp = rampUp;
-                this.caphist = caph;
+                caphist = caph;
             }
 
             public int computeBimodalIndex(uint branchAddress)
@@ -1256,7 +1256,7 @@ namespace PredictionLogic.Prediction.Predictors
 
                 for (int i = 2; i <= NGEHL; i++)
                 {
-                    mgehl[i] = (int)(((double)MINHISTGEHL * Math.Pow((double)MAXHISTGEHL / (double)MINHISTGEHL, (double)(i - 1) / (double)(NGEHL - 1))) + 0.5);
+                    mgehl[i] = (int)(MINHISTGEHL * Math.Pow(MAXHISTGEHL / (double)MINHISTGEHL, (i - 1) / (double)(NGEHL - 1)) + 0.5);
                 }
 
                 // just guarantee that all history lengths are distinct
@@ -1752,7 +1752,7 @@ namespace PredictionLogic.Prediction.Predictors
 
                 INDBIAS = (((int)(branchAddress << 1) ^ (combinedTagePrediction ? 1 : 0)) & ((1 << LOGBIAS) - 1));
                 INDBIASFULL = ((int)(branchAddress << 4) ^ (typeFirstSum + (((coltPrediction ? 1 : 0) + ((combinedTagePrediction ? 1 : 0) << 1)) << 2))) & ((1 << LOGBIASFULL) - 1);
-                INDBIASCOLT = (int)(((int)(branchAddress << 7) ^ (combinedTagePrediction ? 1 : 0) ^ (((tagePredictions[0] ? 1 : 0) ^ ((tagePredictions[1] ? 1 : 0) << 1) ^ ((tagePredictions[2] ? 1 : 0) << 2) ^ ((tagePredictions[3] ? 1 : 0) << 3) ^ ((tagePredictions[4] ? 1 : 0) << 4) ^ ((tagePredictions[5] ? 1 : 0) << 5)) << 1)) & ((1 << LOGBIASCOLT) - 1));
+                INDBIASCOLT = ((int)(branchAddress << 7) ^ (combinedTagePrediction ? 1 : 0) ^ (((tagePredictions[0] ? 1 : 0) ^ ((tagePredictions[1] ? 1 : 0) << 1) ^ ((tagePredictions[2] ? 1 : 0) << 2) ^ ((tagePredictions[3] ? 1 : 0) << 3) ^ ((tagePredictions[4] ? 1 : 0) << 4) ^ ((tagePredictions[5] ? 1 : 0) << 5)) << 1)) & ((1 << LOGBIASCOLT) - 1);
 
                 statisticalCorrelatorSum = 0;
                 predictUsingGehl(branchAddress);
@@ -1917,15 +1917,15 @@ namespace PredictionLogic.Prediction.Predictors
 
                 //Path history
                 P_phist = (P_phist << 1) ^ (takenBit ^ ((branchAddress >> 5) & 1));
-                IMLIhist[INDIMLI] = (IMLIhist[INDIMLI] << 1) ^ (long)(takenBit ^ ((branchAddress >> 5) & 1));
+                IMLIhist[INDIMLI] = (IMLIhist[INDIMLI] << 1) ^ (takenBit ^ ((branchAddress >> 5) & 1));
 
                 if (brtype == OPTYPE_BRANCH_COND)
                 {
                     // local history 
                     L_shist[INDLOCAL] = (L_shist[INDLOCAL] << 1) + takenBit;
                     Q_slhist[INDQLOCAL] = (Q_slhist[INDQLOCAL] << 1) + takenBit;
-                    S_slhist[INDSLOCAL] = ((S_slhist[INDSLOCAL] << 1) + takenBit) ^ (long)((branchAddress >> LOGSECLOCAL) & 15);
-                    T_slhist[INDTLOCAL] = ((T_slhist[INDTLOCAL] << 1) + takenBit) ^ (long)((branchAddress >> LOGTLOCAL) & 15);
+                    S_slhist[INDSLOCAL] = ((S_slhist[INDSLOCAL] << 1) + takenBit) ^ (branchAddress >> LOGSECLOCAL) & 15;
+                    T_slhist[INDTLOCAL] = ((T_slhist[INDTLOCAL] << 1) + takenBit) ^ (branchAddress >> LOGTLOCAL) & 15;
 
                     // global branch history
                     globalBranchHistory = (globalBranchHistory << 1) + takenBit;
@@ -1938,7 +1938,7 @@ namespace PredictionLogic.Prediction.Predictors
                     {
                         if ((branchTarget > branchAddress + 64) || (branchTarget < branchAddress + 64))
                         {
-                            CHIST = (CHIST << 1) ^ (long)(branchAddress & 63);
+                            CHIST = (CHIST << 1) ^ branchAddress & 63;
                         }
                     }
 
@@ -1963,15 +1963,15 @@ namespace PredictionLogic.Prediction.Predictors
                     {
                         // IMLI OH history, see IMLI paper at Micro 2015
                         // (branchTarget >= branchAddress)
-                        PAST[branchAddress & 63] = histtable[((long)((branchAddress ^ (branchAddress >> 2)) << SHIFTFUTURE) + IMLIcount) & (HISTTABLESIZE - 1)];
-                        histtable[((long)((branchAddress ^ (branchAddress >> 2)) << SHIFTFUTURE) + IMLIcount) & (HISTTABLESIZE - 1)] = (sbyte)takenBit;
+                        PAST[branchAddress & 63] = histtable[((branchAddress ^ (branchAddress >> 2)) << SHIFTFUTURE) + IMLIcount & (HISTTABLESIZE - 1)];
+                        histtable[((branchAddress ^ (branchAddress >> 2)) << SHIFTFUTURE) + IMLIcount & (HISTTABLESIZE - 1)] = (sbyte)takenBit;
                     }
                 }
 
                 //is it really useful ?
                 if ((branchAddress + 16 < lastBranchAddress) || (branchAddress > lastBranchAddress + 128))
                 {
-                    BHIST = (BHIST << 1) ^ (long)(branchAddress & 15);
+                    BHIST = (BHIST << 1) ^ branchAddress & 15;
                 }
                 lastBranchAddress = branchAddress;
 
@@ -2028,7 +2028,7 @@ namespace PredictionLogic.Prediction.Predictors
                 int gehlSum = 0;
                 for (int i = 0; i < numberOfTables; i++)
                 {
-                    long branchHistoryHash = branchHistory & ((long)((1 << length[i]) - 1));
+                    long branchHistoryHash = branchHistory & (1 << length[i]) - 1;
                     int index = (int)((((long)branchAddress) ^ branchHistoryHash ^ (branchHistoryHash >> (LOGTAB - i)) ^ (branchHistoryHash >> (40 - 2 * i)) ^ (branchHistoryHash >> (60 - 3 * i))) & (TABSIZE - 1));
                     //gehlSum += 2 * tables[i][index] + 1;
                     gehlSum += tables[i][index];
@@ -2041,7 +2041,7 @@ namespace PredictionLogic.Prediction.Predictors
             {
                 for (int i = 0; i < numberOfTables; i++)
                 {
-                    long branchHistoryHash = branchHistory & ((long)((1 << length[i]) - 1));
+                    long branchHistoryHash = branchHistory & (1 << length[i]) - 1;
                     int index = (int)((((long)branchAddress) ^ branchHistoryHash ^ (branchHistoryHash >> (LOGTAB - i)) ^ (branchHistoryHash >> (40 - 2 * i)) ^ (branchHistoryHash >> (60 - 3 * i))) & (TABSIZE - 1));
                     saturatedCounterUpdate(ref tables[i][index], taken, WIDTH);
                 }
@@ -2059,11 +2059,11 @@ namespace PredictionLogic.Prediction.Predictors
                 int index = (int)(branchAddress ^ (branchAddress >> ((mrhsp[tableIndex] % LOGRHSP) + 1)) ^ rhspHistory[tableIndex].historyHash);
                 if (tableIndex > 1)
                 {
-                    index ^= (int)(rhspHistory[tableIndex - 1].historyHash);
+                    index ^= rhspHistory[tableIndex - 1].historyHash;
                 }
                 if (tableIndex > 3)
                 {
-                    index ^= (int)(rhspHistory[tableIndex / 3].historyHash);
+                    index ^= rhspHistory[tableIndex / 3].historyHash;
                 }
                 return index & ((1 << LOGRHSP) - 1);
             }

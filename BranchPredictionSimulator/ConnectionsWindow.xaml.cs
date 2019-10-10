@@ -23,16 +23,16 @@ namespace BranchPredictionSimulator
 
         public void InitWindow(WindowMain parent)
         {
-            this.ParentWindow = parent;
-            this.ConnectionProxys = parent.TCPConnections;
-            this.ConnectionMessages = parent.ConnectionMessages;
+            ParentWindow = parent;
+            ConnectionProxys = parent.TCPConnections;
+            ConnectionMessages = parent.ConnectionMessages;
             lbConnections.DataContext = ConnectionProxys;
             lbMessages.DataContext = ConnectionMessages;
         }
 
         private void btn_connect_Click(object sender, RoutedEventArgs e)
         {
-            if (this.lbConnections.SelectedIndex == -1)
+            if (lbConnections.SelectedIndex == -1)
             {
                 return;
             }
@@ -49,7 +49,7 @@ namespace BranchPredictionSimulator
 
         private void btn_disconnect_Click(object sender, RoutedEventArgs e)
         {
-            if (this.lbConnections.SelectedIndex == -1)
+            if (lbConnections.SelectedIndex == -1)
             {
                 return;
             }
@@ -65,7 +65,7 @@ namespace BranchPredictionSimulator
 
         private void btn_delete_Click(object sender, RoutedEventArgs e)
         {
-            if (this.lbConnections.SelectedIndex == -1)
+            if (lbConnections.SelectedIndex == -1)
             {
                 return;
             }
@@ -74,13 +74,13 @@ namespace BranchPredictionSimulator
 
         public void TCPProxy_MessagePosted(object sender, StringEventArgs e)
         {
-            if (this.Dispatcher.Thread.Equals(Thread.CurrentThread))
+            if (Dispatcher.Thread.Equals(Thread.CurrentThread))
             {
                 ConnectionMessages.Add(e.message);
             }
             else
             {
-                this.Dispatcher.BeginInvoke(
+                Dispatcher.BeginInvoke(
                     System.Windows.Threading.DispatcherPriority.Normal, new Action(
                         delegate()
                         {

@@ -22,13 +22,13 @@ namespace PredictionLogic.Simulation
 
         #region Serialization
 
-        public SimulationSession(SerializationInfo info, StreamingContext context)
+        protected SimulationSession(SerializationInfo info, StreamingContext context)
         {
             sessionID = (uint)info.GetValue("SessionID", typeof(uint));
             sessionOptions = (SimulationOptions)info.GetValue("Options", typeof(SimulationOptions));
         }
 
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("SessionID", sessionID);
             info.AddValue("Options", sessionOptions);

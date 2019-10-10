@@ -44,7 +44,7 @@ namespace BranchPredictionSimulator.Localization
             //get the resource manager. take from pool if available.
             if (!resourceManagerPool.TryGetValue(language.identifier, out resourceManager))
             {
-                resourceManager = new ResourceManager(language.pathToResourceFile, this.GetType().Assembly);
+                resourceManager = new ResourceManager(language.pathToResourceFile, GetType().Assembly);
                 resourceManagerPool.Add(language.identifier, resourceManager);
             }
             

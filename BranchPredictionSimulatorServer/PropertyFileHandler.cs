@@ -53,7 +53,7 @@ namespace BranchPredictionSimulatorServer
 
         public void save(string path)
         {
-            this.configPath = path;
+            configPath = path;
 
             StreamWriter streamWriter = new StreamWriter(path);
             foreach (string propertyName in propertiesMap.Keys.ToArray())
@@ -69,12 +69,12 @@ namespace BranchPredictionSimulatorServer
 
         public void reload()
         {
-            reload(this.configPath);
+            reload(configPath);
         }
 
         public void reload(string path)
         {
-            this.configPath = path;
+            configPath = path;
             propertiesMap = new Dictionary<string, string>();
 
             if (File.Exists(path))

@@ -79,7 +79,7 @@ namespace PredictionLogic.Prediction.Predictors
             this.numberOfTables = numberOfTables;
 
             this.tableLengthBits = tableLengthBits;
-            this.tableLength = 1 << tableLengthBits;
+            tableLength = 1 << tableLengthBits;
 
             this.counterBits = counterBits;
             counterMax = (1 << counterBits - 1) - 1;
@@ -95,7 +95,7 @@ namespace PredictionLogic.Prediction.Predictors
             branchAddressBits = new int[32];
 
             this.initialThreshold = initialThreshold;
-            this.threshold = initialThreshold;
+            threshold = initialThreshold;
 
             thresholdAdaptCount = 0;
             if (thresholdAdaptBits != 0)

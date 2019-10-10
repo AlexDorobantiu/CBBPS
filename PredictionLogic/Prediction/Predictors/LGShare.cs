@@ -82,7 +82,7 @@ namespace PredictionLogic.Prediction.Predictors
         public bool predictBranch(BranchInfo branch)
         {
             localHistoryIndex = (int)(branch.address & lowBranchAddressMask);
-            patternHistoryTableIndex = (int)(((history & globalHistoryMask) << localHistoryLength) + (localHistory[localHistoryIndex] & localHistoryMask));
+            patternHistoryTableIndex = ((history & globalHistoryMask) << localHistoryLength) + (localHistory[localHistoryIndex] & localHistoryMask);
             patternHistoryTableIndex ^= localHistoryIndex;
             tag = (byte)((branch.address & highBranchAddressMask) >> (localHistoryLength + globalHistoryLength));
 

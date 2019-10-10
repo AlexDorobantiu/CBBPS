@@ -5,6 +5,7 @@ namespace PredictionLogic.Prediction.BenchmarksAndReaders.SPEC2000
 {
     class Spec2000Reader : ITraceReader
     {
+        private const int bufferSize = 4000000;
         int numberOfBranches;
 
         byte[] buffer;
@@ -16,7 +17,7 @@ namespace PredictionLogic.Prediction.BenchmarksAndReaders.SPEC2000
 
         public Spec2000Reader()
         {
-            buffer = new byte[4000000];
+            buffer = new byte[bufferSize];
         }
 
         public bool openTrace(string folderPath, string filename)
@@ -24,7 +25,7 @@ namespace PredictionLogic.Prediction.BenchmarksAndReaders.SPEC2000
             try
             {
                 int fileIndex = -1;
-                for (int i = 0; i < 17; i++)
+                for (int i = 0; i < TraceFileInfo.spec2000Filenames.Length; i++)
                 {
                     if (TraceFileInfo.spec2000Filenames[i].Equals(filename))
                     {
@@ -47,10 +48,9 @@ namespace PredictionLogic.Prediction.BenchmarksAndReaders.SPEC2000
                 // copy the decompressed information into into the buffer
                 for (int k = 0; k <= fileIndex; k++)
                 {
-                    gzipInputStream.Read(buffer, 0, 4000000);
+                    gzipInputStream.Read(buffer, 0, bufferSize);
                 }
                 gzipInputStream.Close();
-                inputFile.Close();
 
                 bufferIndex = 0;
 
@@ -66,7 +66,7 @@ namespace PredictionLogic.Prediction.BenchmarksAndReaders.SPEC2000
 
         public IBranch getNextBranch()
         {
-            if (bufferIndex == 4000000)
+            if (bufferIndex == bufferSize)
             {
                 return null;
             }

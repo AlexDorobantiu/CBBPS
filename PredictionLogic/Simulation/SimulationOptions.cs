@@ -57,22 +57,22 @@ namespace PredictionLogic.Simulation
         public SimulationOptions GetCopy()
         {
             SimulationOptions copy = new SimulationOptions();
-            copy.conditionalOnly = this.conditionalOnly;
-            copy.numberOfBranchesToSkip = this.numberOfBranchesToSkip;
-            copy.remoteExecutionOnly = this.remoteExecutionOnly;
+            copy.conditionalOnly = conditionalOnly;
+            copy.numberOfBranchesToSkip = numberOfBranchesToSkip;
+            copy.remoteExecutionOnly = remoteExecutionOnly;
             return copy;
         }
 
         #region Serialization
 
-        public SimulationOptions(SerializationInfo info, StreamingContext context)
+        protected SimulationOptions(SerializationInfo info, StreamingContext context)
         {
             conditionalOnly = (bool)info.GetValue("conditionalOnly", typeof(bool));
             numberOfBranchesToSkip = (int)info.GetValue("nrBranchesToSkip", typeof(int));
             remoteExecutionOnly = false;
         }
 
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("conditionalOnly", conditionalOnly);
             info.AddValue("nrBranchesToSkip", numberOfBranchesToSkip);

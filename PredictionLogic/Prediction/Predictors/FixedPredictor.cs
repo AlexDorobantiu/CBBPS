@@ -22,7 +22,7 @@ namespace PredictionLogic.Prediction.Predictors
                 
         public bool predictBranch(BranchInfo branch)
         {
-            return this.predictTaken;
+            return predictTaken;
         }
 
         public void update(IBranch branch)

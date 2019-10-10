@@ -87,7 +87,7 @@ namespace BranchPredictionSimulator.SimulationResultStructures
                 observableCollections.Add(predictor, benchmarkStatisticsCollection);
                 return benchmarkStatisticsCollection;
             }
-            catch (Exception e)
+            catch
             {
                 return null;
             }
@@ -99,7 +99,7 @@ namespace BranchPredictionSimulator.SimulationResultStructures
             {
                 benchmarkIndexMap.Add(benchmark, numberOfBenchmarks++);
             }
-            catch (Exception e)
+            catch
             {
             }
         }
@@ -233,7 +233,7 @@ namespace BranchPredictionSimulator.SimulationResultStructures
             this.predictorIndex = predictorIndex;
             this.benchmarkIndex = benchmarkIndex;
             this.value = value;
-            this.correspondingCollection = collection;
+            correspondingCollection = collection;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace PredictionLogic.Simulation
         public SimulationInfo(PredictorInfo predictorInfo, string benchmarkName, BenchmarkType benchmarkType)
         {
             this.predictorInfo = predictorInfo;
-            this.benchmarkInfo = new BenchmarkInfo(benchmarkName, benchmarkType);
+            benchmarkInfo = new BenchmarkInfo(benchmarkName, benchmarkType);
         }
 
         public BenchmarkStatisticsResult simulate(SimulationOptions simulationOptions, ApplicationOptions applicationOptions)

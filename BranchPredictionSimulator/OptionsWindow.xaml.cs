@@ -44,7 +44,7 @@ namespace BranchPredictionSimulator
             set
             {
                 applicationOptions = value;
-                this.GBAppOptions.DataContext = value;
+                GBAppOptions.DataContext = value;
             }
         }
 
@@ -58,7 +58,7 @@ namespace BranchPredictionSimulator
             set
             {
                 simulationOptions = value;
-                this.GBSimulationOptions.DataContext = value;
+                GBSimulationOptions.DataContext = value;
             }
         }
 
@@ -88,7 +88,7 @@ namespace BranchPredictionSimulator
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
         {
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
-            ApplicationOptionsClient applicationOptions = this.GBAppOptions.DataContext as ApplicationOptionsClient;
+            ApplicationOptionsClient applicationOptions = GBAppOptions.DataContext as ApplicationOptionsClient;
 
             var result = folderBrowserDialog.ShowDialog();
             if (result == System.Windows.Forms.DialogResult.OK)
@@ -99,7 +99,7 @@ namespace BranchPredictionSimulator
 
         private void tb_TracePathMain_TextChanged(object sender, TextChangedEventArgs e)
         {
-            ApplicationOptionsClient appOptions = this.GBAppOptions.DataContext as ApplicationOptionsClient;
+            ApplicationOptionsClient appOptions = GBAppOptions.DataContext as ApplicationOptionsClient;
             appOptions.TracePathMain = tb_TracePathMain.Text;
         }
     }

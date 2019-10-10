@@ -37,8 +37,8 @@ namespace BranchPredictionSimulator
         public Chart()
         {
             InitializeComponent();
-            this.Width = double.NaN;
-            this.Height = double.NaN;
+            Width = double.NaN;
+            Height = double.NaN;
 
             AMColumnDefinition = new ColumnDefinition { Width = (showAM ? SimpleStarLength : ZeroLength) };
             GMColumnDefinition = new ColumnDefinition { Width = (showGM ? SimpleStarLength : ZeroLength) };
@@ -336,27 +336,27 @@ namespace BranchPredictionSimulator
                 var res = currentDictionary.getResultCollectionForPredictor(predictorAndIndex.Key);
                 if (res.ArithmeticMean.Accuracy < level)
                 {
-                    this.amGrid.Children[predictorAndIndex.Value + 1].Opacity = opacityBelowLine;
+                    amGrid.Children[predictorAndIndex.Value + 1].Opacity = opacityBelowLine;
                 }
                 else
                 {
-                    this.amGrid.Children[predictorAndIndex.Value + 1].Opacity = opacityAboveLine;
+                    amGrid.Children[predictorAndIndex.Value + 1].Opacity = opacityAboveLine;
                 }
                 if (res.GeometricMean.Accuracy < level)
                 {
-                    this.gmGrid.Children[predictorAndIndex.Value + 1].Opacity = opacityBelowLine;
+                    gmGrid.Children[predictorAndIndex.Value + 1].Opacity = opacityBelowLine;
                 }
                 else
                 {
-                    this.gmGrid.Children[predictorAndIndex.Value + 1].Opacity = opacityAboveLine;
+                    gmGrid.Children[predictorAndIndex.Value + 1].Opacity = opacityAboveLine;
                 }
                 if (res.HarmonicMean.Accuracy < level)
                 {
-                    this.hmGrid.Children[predictorAndIndex.Value + 1].Opacity = opacityBelowLine;
+                    hmGrid.Children[predictorAndIndex.Value + 1].Opacity = opacityBelowLine;
                 }
                 else
                 {
-                    this.hmGrid.Children[predictorAndIndex.Value + 1].Opacity = opacityAboveLine;
+                    hmGrid.Children[predictorAndIndex.Value + 1].Opacity = opacityAboveLine;
                 }
             }
         }
@@ -373,9 +373,9 @@ namespace BranchPredictionSimulator
 
             foreach (var pred in currentDictionary.PredictorsWithIndices)
             {
-                this.amGrid.Children[pred.Value + 1].Opacity = opacityDefault;
-                this.gmGrid.Children[pred.Value + 1].Opacity = opacityDefault;
-                this.hmGrid.Children[pred.Value + 1].Opacity = opacityDefault;
+                amGrid.Children[pred.Value + 1].Opacity = opacityDefault;
+                gmGrid.Children[pred.Value + 1].Opacity = opacityDefault;
+                hmGrid.Children[pred.Value + 1].Opacity = opacityDefault;
             }
         }
 

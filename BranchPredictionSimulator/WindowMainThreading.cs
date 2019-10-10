@@ -25,7 +25,7 @@ namespace BranchPredictionSimulator
                 threads = new Thread[threadSlots];
                 for (int i = 0; i < threads.Length; i++)
                 {
-                    threads[i] = new Thread(this.performWork);
+                    threads[i] = new Thread(performWork);
                     threads[i].Name = "Local Thread " + localThreadNumber++;
                     threads[i].Start();
                 }
@@ -70,7 +70,7 @@ namespace BranchPredictionSimulator
 
             lock (simulationResultsDictionary)
             {
-                simulationResultsDictionary.setResultUsingDispatcher(this.Dispatcher, e.simulation.predictorInfo, e.simulation.benchmarkInfo, e.result);
+                simulationResultsDictionary.setResultUsingDispatcher(Dispatcher, e.simulation.predictorInfo, e.simulation.benchmarkInfo, e.result);
             }
         }
 
@@ -95,12 +95,12 @@ namespace BranchPredictionSimulator
                     }
 
                     // big work
-                    BenchmarkStatisticsResult result = currentSimulation.simulate(this.SimulationOptionsCurrentExecution, this.AppOptions);
+                    BenchmarkStatisticsResult result = currentSimulation.simulate(SimulationOptionsCurrentExecution, AppOptions);
 
                     // results
                     lock (simulationResultsDictionary)
                     {
-                        simulationResultsDictionary.setResultUsingDispatcher(this.Dispatcher, currentSimulation.predictorInfo, currentSimulation.benchmarkInfo, result);
+                        simulationResultsDictionary.setResultUsingDispatcher(Dispatcher, currentSimulation.predictorInfo, currentSimulation.benchmarkInfo, result);
                     }
                 }
             }
@@ -137,7 +137,7 @@ namespace BranchPredictionSimulator
 
         private void simulationResultsDictionaryFilled(object sender, EventArgs e)
         {
-            this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(this.workFinished));
+            Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(workFinished));
         }
 
         private void workFinished()
@@ -149,7 +149,7 @@ namespace BranchPredictionSimulator
 
         private void beginInvokePrintResults(object toPrint)
         {
-            this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
+            Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
                 delegate()
                 {
                     displayedResults.Add(toPrint);
@@ -159,7 +159,7 @@ namespace BranchPredictionSimulator
 
         private void beginInvokeBenchmarkStatisticsCollectionAdd(BenchmarkStatisticsCollection benchmarkStatisticsCollection, BenchmarkStatisticsResult benchmarkStatisticsResult)
         {
-            this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
+            Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(
                 delegate()
                 {
                     benchmarkStatisticsCollection.addSorted(benchmarkStatisticsResult);

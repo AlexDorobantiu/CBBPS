@@ -62,9 +62,9 @@ namespace PredictionLogic.Prediction.Predictors
         public SIP3(uint branchLocations, int counterBits, int maximumIntertia, int initialThreshold, int thresholdAdaptBits)
         {
             this.branchLocations = branchLocations;
-            this.maximumInertia = maximumIntertia;
+            maximumInertia = maximumIntertia;
             this.initialThreshold = initialThreshold;
-            this.updateThreshold = initialThreshold;
+            updateThreshold = initialThreshold;
 
             thresholdAdaptCount = 0;
             if (thresholdAdaptBits != 0)

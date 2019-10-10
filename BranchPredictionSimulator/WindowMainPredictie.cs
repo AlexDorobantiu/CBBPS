@@ -74,7 +74,7 @@ namespace BranchPredictionSimulator
             int propertyCount = predictorInfoType.PredictorProperties.Count;
             if (propertyCount == 0)
             {
-                predictorInfo.Add(new PredictorInfo(predictorInfoType.PredictorType, predictorInfoType.DisplayName, this.AppOptions, new object[0]));
+                predictorInfo.Add(new PredictorInfo(predictorInfoType.PredictorType, predictorInfoType.DisplayName, AppOptions, new object[0]));
                 return predictorInfo;
             }
 
@@ -118,7 +118,7 @@ namespace BranchPredictionSimulator
                         }
                         description += ")";
 
-                        predictorInfo.Add(new PredictorInfo(predictorInfoType.PredictorType, description, this.AppOptions, predictorArguments));
+                        predictorInfo.Add(new PredictorInfo(predictorInfoType.PredictorType, description, AppOptions, predictorArguments));
                     }
                     else
                     {
@@ -135,7 +135,7 @@ namespace BranchPredictionSimulator
         {
             List<PredictorInfo> predictorRequests;
 
-            if (!this.AppOptions.IsPredictorCompareMode)
+            if (!AppOptions.IsPredictorCompareMode)
             {
                 PredictorTypeInfo predictorType = (PredictorTypeInfo)PredictorTypesListBox.SelectedItem;
                 predictorRequests = getPredictorRequests(predictorType);
@@ -218,7 +218,7 @@ namespace BranchPredictionSimulator
             simulationResultsDictionary.initialize();
 
             // start worker threads
-            this.startWork();
+            startWork();
         }
 
         private void abort_Click(object sender, RoutedEventArgs e)

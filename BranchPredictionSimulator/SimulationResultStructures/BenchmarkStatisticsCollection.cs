@@ -15,7 +15,7 @@ namespace BranchPredictionSimulator.SimulationResultStructures
 
         public BenchmarkStatisticsCollection()
         {
-            this.CollectionChanged += new NotifyCollectionChangedEventHandler(benchmarkStatisticsCollectionCollectionChanged);
+            CollectionChanged += new NotifyCollectionChangedEventHandler(benchmarkStatisticsCollectionCollectionChanged);
             ArithmeticMean = new StatisticsResult("Arithmetic Mean");
             GeometricMean = new StatisticsResult("Geometric Mean");
             HarmonicMean = new StatisticsResult("Harmonic Mean");
@@ -43,7 +43,7 @@ namespace BranchPredictionSimulator.SimulationResultStructures
                 }
                 i++;
             }
-            this.InsertItem(i, item);
+            InsertItem(i, item);
         }
 
         public void calculateMeans()
@@ -55,7 +55,7 @@ namespace BranchPredictionSimulator.SimulationResultStructures
             double arithmeticalSum = 0;
             double arithmeticalTotal = 0;
             foreach (BenchmarkStatisticsResult benchmarkStatisticsResult in this)
-                if (benchmarkStatisticsResult.Accuracy != double.NaN && benchmarkStatisticsResult.Accuracy > 0)
+                if (!double.IsNaN(benchmarkStatisticsResult.Accuracy) && benchmarkStatisticsResult.Accuracy > 0)
                 {
                     arithmeticalTotal += benchmarkStatisticsResult.NumberOfBranches;
                     arithmeticalSum += benchmarkStatisticsResult.NumberOfCorrectPredictions;

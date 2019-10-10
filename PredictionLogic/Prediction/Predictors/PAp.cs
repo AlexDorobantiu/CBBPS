@@ -74,7 +74,7 @@ namespace PredictionLogic.Prediction.Predictors
         public bool predictBranch(BranchInfo branch)
         {
             localPatternHistoryTableIndex = (int)(branch.address & lowBranchAddressMask);
-            globalPatternHistoryTableIndex = (int)(localPatternHistoryTable[localPatternHistoryTableIndex].history & historyMask);
+            globalPatternHistoryTableIndex = localPatternHistoryTable[localPatternHistoryTableIndex].history & historyMask;
 
             prediction = (localPatternHistoryTable[localPatternHistoryTableIndex].globalPatternHistoryTable[globalPatternHistoryTableIndex] >= 0);
             return prediction;

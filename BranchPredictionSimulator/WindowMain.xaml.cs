@@ -145,7 +145,7 @@ namespace BranchPredictionSimulator
             abortAllWork();
 
             // save app settings and connections to disk
-            SettingsReaderWriter.saveSettingsToDisk(this.AppOptions, this.TCPConnections as IEnumerable<TCPSimulatorProxy>, this.SimulationOptionsForBinding);
+            SettingsReaderWriter.saveSettingsToDisk(AppOptions, TCPConnections as IEnumerable<TCPSimulatorProxy>, SimulationOptionsForBinding);
 
             // disconnect any left connections, to be tidy
             foreach (TCPSimulatorProxy proxy in TCPConnections)
@@ -165,8 +165,8 @@ namespace BranchPredictionSimulator
         private void MenuItemOptions_Click(object sender, RoutedEventArgs e)
         {
             optionsWindow = new OptionsWindow();
-            optionsWindow.ApplicationOptions = this.AppOptions;
-            optionsWindow.SimulationOptions = this.SimulationOptionsForBinding;
+            optionsWindow.ApplicationOptions = AppOptions;
+            optionsWindow.SimulationOptions = SimulationOptionsForBinding;
             optionsWindow.Show();
         }
     }

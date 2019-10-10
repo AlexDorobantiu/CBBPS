@@ -24,7 +24,7 @@ namespace BranchPredictionSimulator
         public int MaxValue { get; set; }
         public int MinValue { get; set; }
 
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(int), typeof(NumericUpDownInt32), new PropertyMetadata((int)0, ValueChangedCallback));
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(int), typeof(NumericUpDownInt32), new PropertyMetadata(0, ValueChangedCallback));
 
         public int Value
         {

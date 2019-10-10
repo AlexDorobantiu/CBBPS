@@ -138,7 +138,7 @@ namespace PredictionLogic.Prediction.Predictors
             tableHistoryLength[numberOfTables - 1] = minimumHistoryLength;
             for (int i = 1; i < numberOfTables - 1; i++)
             {
-                tableHistoryLength[numberOfTables - 1 - i] = (int)(((double)minimumHistoryLength * Math.Pow((double)(maximumHistoryLength - 1) / (double)minimumHistoryLength, (double)i / (double)(numberOfTables - 1))) + 0.5);
+                tableHistoryLength[numberOfTables - 1 - i] = (int)(minimumHistoryLength * Math.Pow((maximumHistoryLength - 1) / (double)minimumHistoryLength, i / (double)(numberOfTables - 1)) + 0.5);
             }
 
             taggedTableHistoryHash = new HistoryRollingHash[numberOfTables];
@@ -545,7 +545,7 @@ namespace PredictionLogic.Prediction.Predictors
         {
             historyHash = 0;
             this.historyLength = historyLength;
-            this.compressedLengthBits = historyHashBits;
+            compressedLengthBits = historyHashBits;
             lastEntryHashIndex = historyLength % historyHashBits;
         }
 

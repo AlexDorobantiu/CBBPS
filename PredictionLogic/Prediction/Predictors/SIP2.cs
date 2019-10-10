@@ -29,7 +29,7 @@ namespace PredictionLogic.Prediction.Predictors
 
         public SIP2(uint branchLocations, int inertia)
         {
-            this.numberOfBranchLocations = branchLocations;
+            numberOfBranchLocations = branchLocations;
             this.inertia = inertia;
             states = new int[branchLocations];
 

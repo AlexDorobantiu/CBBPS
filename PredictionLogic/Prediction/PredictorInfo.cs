@@ -18,10 +18,10 @@ namespace PredictionLogic.Prediction
 
         public PredictorInfo(Type predictorType, string description, ApplicationOptions options, params object[] constructorArgs)
         {
-            this.predictorTypeFullName = predictorType.FullName;
+            predictorTypeFullName = predictorType.FullName;
             this.description = description;
-            this.arguments = constructorArgs;
-            this.applicationOptions = options;
+            arguments = constructorArgs;
+            applicationOptions = options;
         }
 
         public IPredictor createPredictorInstance()
@@ -38,7 +38,7 @@ namespace PredictionLogic.Prediction
             }
             catch (OutOfMemoryException outOfMemoryException)
             {
-                ErrorNotifier.showError("The Predictor " + predictorTypeFullName + " requires too much memory to be instatiated.");
+                ErrorNotifier.showError("The Predictor " + predictorTypeFullName + " requires too much memory to be instatiated.\n" + outOfMemoryException.Message);
                 return null;
             }
             catch (Exception e)
@@ -105,7 +105,7 @@ namespace PredictionLogic.Prediction
 
         public override int GetHashCode()
         {
-            int h = this.predictorTypeFullName.GetHashCode() ^ this.arguments.Length;
+            int h = predictorTypeFullName.GetHashCode() ^ arguments.Length;
             return h;
         }
 
@@ -116,17 +116,17 @@ namespace PredictionLogic.Prediction
             {
                 return false;
             }
-            if (other.predictorTypeFullName != this.predictorTypeFullName)
+            if (other.predictorTypeFullName != predictorTypeFullName)
             {
                 return false;
             }
-            if (other.arguments.Length != this.arguments.Length)
+            if (other.arguments.Length != arguments.Length)
             {
                 return false;
             }
-            for (int i = 0; i < this.arguments.Length; i++)
+            for (int i = 0; i < arguments.Length; i++)
             {
-                if (!other.arguments[i].Equals(this.arguments[i]))
+                if (!other.arguments[i].Equals(arguments[i]))
                 {
                     return false;
                 }
@@ -136,14 +136,14 @@ namespace PredictionLogic.Prediction
 
         #region Serialization
 
-        public PredictorInfo(SerializationInfo info, StreamingContext context)
+        protected PredictorInfo(SerializationInfo info, StreamingContext context)
         {
             predictorTypeFullName = info.GetString("PredictorTypeFullName");
             description = info.GetString("Description");
             arguments = (object[])info.GetValue("Arguments", typeof(object[]));
         }
 
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("PredictorTypeFullName", predictorTypeFullName);
             info.AddValue("Description", description);

@@ -11,7 +11,7 @@ using PredictionLogic.Simulation;
 
 namespace BranchPredictionSimulator
 {
-    public class TCPSimulatorProxy : INotifyPropertyChanged
+    public class TCPSimulatorProxy : INotifyPropertyChanged, IDisposable
     {
         public event statisticsResultReceivedEventHandler resultsReceived;
         public event EventHandler taskRequestReceived;
@@ -77,7 +77,7 @@ namespace BranchPredictionSimulator
             formatter.Binder = new ClientToServerDeserializationBinder();
             this.hostname = hostname;
             this.port = port;
-            this.connected = false;
+            connected = false;
             taskRequests = 0;
         }
 
@@ -137,7 +137,7 @@ namespace BranchPredictionSimulator
                 throw new ArgumentNullException("session");
             }
 
-            this.taskRequests = 0;
+            taskRequests = 0;
             this.session = session;
 
             try
@@ -154,7 +154,7 @@ namespace BranchPredictionSimulator
 
         public void sendSimulationTask(SimulationInfo simulation)
         {
-            if (this.session == null)
+            if (session == null)
             {
                 postMessage("Cannot send task; no session is active at the moment. ");
                 return;
@@ -164,7 +164,7 @@ namespace BranchPredictionSimulator
             TaskPackage taskPackage = new TaskPackage
             {
                 taskID = nextTransmissionID++,
-                sessionID = this.session.sessionID,
+                sessionID = session.sessionID,
                 simulationTask = simulation
             };
 
@@ -172,7 +172,7 @@ namespace BranchPredictionSimulator
             {
                 networkStream.WriteByte((byte)TrasmissionFlags.Task);
                 formatter.Serialize(networkStream, taskPackage);
-                postMessage("Task sent to " + hostname + " on port " + port + " (session id: " + this.session.sessionID + ")");
+                postMessage("Task sent to " + hostname + " on port " + port + " (session id: " + session.sessionID + ")");
                 sentSimulations.Add(taskPackage.taskID, simulation);
             }
             catch (Exception e)
@@ -186,8 +186,8 @@ namespace BranchPredictionSimulator
             try
             {
                 networkStream.WriteByte((byte)TrasmissionFlags.AbortSession);
-                formatter.Serialize(networkStream, this.session.sessionID);
-                postMessage("Session abortion request sent to " + hostname + " on port " + port + " (session id: " + this.session.sessionID + ")");
+                formatter.Serialize(networkStream, session.sessionID);
+                postMessage("Session abortion request sent to " + hostname + " on port " + port + " (session id: " + session.sessionID + ")");
                 taskRequests = 0;
             }
             catch (Exception e)
@@ -213,7 +213,7 @@ namespace BranchPredictionSimulator
                     {
                         case (byte)TrasmissionFlags.TaskRequest:
                             sessionIdReceived = (uint)formatter.Deserialize(networkStream);
-                            if (sessionIdReceived == this.session.sessionID)
+                            if (sessionIdReceived == session.sessionID)
                             {
                                 if (taskRequestReceived != null)
                                 {
@@ -228,12 +228,12 @@ namespace BranchPredictionSimulator
                             }
                             break;
                         case (byte)TrasmissionFlags.Result:
-                            ResultPackage res_pack = (ResultPackage)formatter.Deserialize(networkStream);
-                            if (res_pack.sessionID == this.session.sessionID)
+                            ResultPackage resultPackage = (ResultPackage)formatter.Deserialize(networkStream);
+                            if (resultPackage.sessionID == session.sessionID)
                             {
                                 if (resultsReceived != null)
                                 {
-                                    resultsReceived(this, new BenchmarkStatisticsResultReceivedEventArgs(sentSimulations[res_pack.taskID], res_pack.result));
+                                    resultsReceived(this, new BenchmarkStatisticsResultReceivedEventArgs(sentSimulations[resultPackage.taskID], resultPackage.result));
                                 }
                                 postMessage("Received a result from " + hostname + " on port " + port + " ");
                             }
@@ -273,6 +273,7 @@ namespace BranchPredictionSimulator
             }
         }
 
+
         #region INotifyPropertyChanged
 
         private PropertyChangedEventArgs isConnectedPropertyChangedEventArgs = new PropertyChangedEventArgs("Connected");
@@ -280,6 +281,35 @@ namespace BranchPredictionSimulator
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    if (tcpClient != null)
+                    {
+                        tcpClient.Close();
+                    }
+                }
+                disposedValue = true;
+            }
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            // GC.SuppressFinalize(this);
+        }
+        #endregion
+
     }
 
     public delegate void statisticsResultReceivedEventHandler(object sender, BenchmarkStatisticsResultReceivedEventArgs e);

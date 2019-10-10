@@ -49,12 +49,12 @@ namespace PredictionLogic.Prediction.PredictorPropertyTypes
 
         public PredictorBoolProperty(string propertyName, string displayName, string textTrue, string textFalse, bool defaultIsTrue)
         {
-            this.PropertyName = propertyName;
-            this.DisplayName = displayName;
-            this.bindingTaken = defaultIsTrue;
-            this.bindingNotTaken = !defaultIsTrue;
-            this.TextTrue = textTrue;
-            this.TextFalse = textFalse;
+            PropertyName = propertyName;
+            DisplayName = displayName;
+            bindingTaken = defaultIsTrue;
+            bindingNotTaken = !defaultIsTrue;
+            TextTrue = textTrue;
+            TextFalse = textFalse;
         }
 
         public override List<object> loadValuesFromUI()

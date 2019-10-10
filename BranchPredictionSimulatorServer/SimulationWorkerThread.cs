@@ -17,7 +17,7 @@ namespace BranchPredictionSimulatorServer
         public SimulationWorkerThread(ConnectionThread parent, string threadName)
         {
             ParentConnectionThread = parent;
-            this.taskSource = parent.TaskBuffer;
+            taskSource = parent.TaskBuffer;
             waitHandleBetweenTasks = new AutoResetEvent(false);
             thread = new Thread(doWork);
             thread.Name = threadName;
@@ -40,11 +40,6 @@ namespace BranchPredictionSimulatorServer
             waitHandleBetweenTasks.Set();
             thread.Join();
             waitHandleBetweenTasks.Close();
-        }
-
-        public void Dispose()
-        {
-            kill();
         }
 
         private void doWork()
@@ -91,5 +86,31 @@ namespace BranchPredictionSimulatorServer
                 Console.WriteLine("The thread abortion process occured at a time when it could not be properly handled.");
             }
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    kill();
+                }
+                disposedValue = true;
+            }
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            // GC.SuppressFinalize(this);
+        }
+        #endregion
     }
+
 }

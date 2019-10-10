@@ -22,9 +22,9 @@ namespace PredictionLogic.Prediction.PredictorPropertyTypes
             this.defaultValue = defaultValue;
             this.minimumValue = minimumValue;
             this.maximumValue = maximumValue;
-            this.PropertyName = propertyName;
-            this.DisplayName = displayName;
-            this.BindingString = defaultValue.ToString();
+            PropertyName = propertyName;
+            DisplayName = displayName;
+            BindingString = defaultValue.ToString();
         }
 
         public override List<object> loadValuesFromUI()
@@ -37,16 +37,19 @@ namespace PredictionLogic.Prediction.PredictorPropertyTypes
                 int value;
                 if (int.TryParse(s, out value))
                 {
-                    if (value > this.maximumValue)
+                    if (value > maximumValue)
                     {
-                        value = this.maximumValue;
+                        value = maximumValue;
                     }
-                    if (value < this.minimumValue)
+                    if (value < minimumValue)
                     {
-                        value = this.minimumValue;
+                        value = minimumValue;
                     }
                 }
-                else value = this.defaultValue;
+                else
+                {
+                    value = defaultValue;
+                }
 
                 if (outputValues.IndexOf(value) == -1)
                 {
