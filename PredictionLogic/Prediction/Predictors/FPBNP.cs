@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using PredictionLogic.Prediction.PredictorPropertyTypes;
 
 namespace PredictionLogic.Prediction.Predictors

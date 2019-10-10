@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 using System.Xml;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Soap;
 using PredictionLogic;
-using PredictionLogic.Prediction;
 using PredictionLogic.Simulation;
 
 namespace BranchPredictionSimulator

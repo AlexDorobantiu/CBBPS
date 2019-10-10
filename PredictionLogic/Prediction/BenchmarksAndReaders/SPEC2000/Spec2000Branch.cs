@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace PredictionLogic.Prediction.BenchmarksAndReaders.SPEC2000
 {
     public class Spec2000Branch : IBranch

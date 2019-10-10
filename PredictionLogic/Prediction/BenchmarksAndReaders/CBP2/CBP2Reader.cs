@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
-using System.IO.Compression;
 using ICSharpCode.SharpZipLib.BZip2;
 
 namespace PredictionLogic.Prediction.BenchmarksAndReaders.CBP2
@@ -16,7 +12,6 @@ namespace PredictionLogic.Prediction.BenchmarksAndReaders.CBP2
         private BZip2InputStream bzip2InputStream;
 
         private CBP2Branch branch;
-        private CBP2Branch lastBranch;
         private int numberOfBranches;
 
         #region File Format details
@@ -111,7 +106,6 @@ namespace PredictionLogic.Prediction.BenchmarksAndReaders.CBP2
             classMisspredicted = new int[8];
 
             branch = new CBP2Branch();
-            lastBranch = new CBP2Branch();
             lastReaderBranch = new CBP2ReaderBranch();
         }
 
@@ -313,8 +307,7 @@ namespace PredictionLogic.Prediction.BenchmarksAndReaders.CBP2
                 default:
                     return null;
             }
-
-            lastBranch = branch;
+            
             numberOfBranches++;
             return branch;
         }

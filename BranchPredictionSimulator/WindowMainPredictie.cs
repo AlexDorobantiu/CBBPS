@@ -1,19 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 using System.Collections.ObjectModel;
-using PredictionLogic;
 using PredictionLogic.Prediction;
 using PredictionLogic.Prediction.Predictors;
 using PredictionLogic.Prediction.BenchmarksAndReaders;
@@ -83,6 +72,12 @@ namespace BranchPredictionSimulator
 
             // cartesian product for all valid and unique property values
             int propertyCount = predictorInfoType.PredictorProperties.Count;
+            if (propertyCount == 0)
+            {
+                predictorInfo.Add(new PredictorInfo(predictorInfoType.PredictorType, predictorInfoType.DisplayName, this.AppOptions, new object[0]));
+                return predictorInfo;
+            }
+
             List<object>[] propertyValues = new List<object>[propertyCount];
 
             int index = 0;

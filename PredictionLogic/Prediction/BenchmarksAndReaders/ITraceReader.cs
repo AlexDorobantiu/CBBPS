@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace PredictionLogic.Prediction.BenchmarksAndReaders
 {
     public interface ITraceReader

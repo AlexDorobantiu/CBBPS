@@ -1,18 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization.Formatters.Soap;
-using System.Runtime.Serialization;
-
-using PredictionLogic;
-using PredictionLogic.Prediction;
 using PredictionLogic.SimulationStatistics;
 using PredictionLogic.CommunicationProtocol;
 using PredictionLogic.Simulation;

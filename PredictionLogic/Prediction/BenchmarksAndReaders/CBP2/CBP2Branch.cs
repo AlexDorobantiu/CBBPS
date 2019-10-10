@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace PredictionLogic.Prediction.BenchmarksAndReaders.CBP2
 {
     public class CBP2Branch : IBranch

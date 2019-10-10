@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel;
-using System.IO;
-using System.Configuration;
 using PredictionLogic;
 
 namespace BranchPredictionSimulatorServer

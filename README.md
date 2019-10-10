@@ -13,8 +13,8 @@ See what branch prediction means and what it is used for on the [Wikipedia page]
 - results export in plain text or .xslx format
 
 ### Technology:
- - Written in plain **C#** using **Visual Studio 2010**
- - **.NET** framework, version **3.5**
+ - Written in plain **C#** using **Visual Studio 2015** (converted from the original **Visual Studio 2010**)
+ - **.NET** framework, version **4.7.2** (converted from the original **3.5**)
  - The front-end is implemented using XAML
  
 #### Details
@@ -51,7 +51,9 @@ More benchmarks can be added in the future.
  - Perceptron - based on the [perceptron supervised binary classifier](https://en.wikipedia.org/wiki/Perceptron)
  - Fast Path-Based Neural Branch Predictor - perceptron learning rule applied on branch path (inspired from the [official implementation](http://hpca23.cse.tamu.edu/taco/public-bp/fpbnp.java) of Daniel A. Jiménez)
  - Idealized Piecewise Linear Branch Prediction - extended perceptron learning rule applied in both global history and branch path, implementation is based on [this paper](https://www.jilp.org/vol7/v7paper9.pdf)
- - OGEHL - Optimised GEometric History Length Branch Prediction - perceptron learning rule applied to geometric history length (hashed with branch address) table indexing, implementation is based on [this paper](https://www.jilp.org/vol7/v7paper7.pdf)
+ - O-GEHL - Optimised GEometric History Length Branch Prediction - perceptron learning rule applied to geometric history length (hashed with branch address) table indexing, implementation is based on [this paper](https://www.jilp.org/vol7/v7paper7.pdf)
+ - TAGE - TAgged GEometric history length Branch Prediction - PPM-like predictor, implementation based on [this paper](https://www.jilp.org/vol8/v8paper1.pdf)
+ - MTAGE+SC predictor, implementation based on [this paper](https://hal.inria.fr/hal-01354251/document)
  
 More predictors can be added in the future.
 

@@ -6,8 +6,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-
-using PredictionLogic;
 using BranchPredictionSimulator.SimulationResultStructures;
 using PredictionLogic.Prediction.BenchmarksAndReaders;
 using PredictionLogic.Prediction;

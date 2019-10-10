@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using PredictionLogic.Prediction.PredictorPropertyTypes;
 
 namespace PredictionLogic.Prediction.Predictors
@@ -1034,19 +1033,19 @@ namespace PredictionLogic.Prediction.Predictors
             int tageCombinerSum;
             int tageCombinerThreshold;
             int typeFirstSum;
-            sbyte[] FirstBIAS = new sbyte[(1 << LOGTAB)];
-            sbyte[] TBias0 = new sbyte[((1 << LOGTAB))];
-            sbyte[] TBias1 = new sbyte[((1 << LOGTAB))];
-            sbyte[] TBias2 = new sbyte[((1 << LOGTAB))];
-            sbyte[] TBias3 = new sbyte[((1 << LOGTAB))];
-            sbyte[] TBias4 = new sbyte[((1 << LOGTAB))];
-            sbyte[] TBias5 = new sbyte[((1 << LOGTAB))];
-            sbyte[] SB0 = new sbyte[((1 << LOGTAB))];
-            sbyte[] SB1 = new sbyte[((1 << LOGTAB))];
-            sbyte[] SB2 = new sbyte[((1 << LOGTAB))];
-            sbyte[] SB3 = new sbyte[((1 << LOGTAB))];
-            sbyte[] SB4 = new sbyte[((1 << LOGTAB))];
-            sbyte[] SB5 = new sbyte[((1 << LOGTAB))];
+            sbyte[] FirstBIAS = new sbyte[1 << LOGTAB];
+            sbyte[] TBias0 = new sbyte[1 << LOGTAB];
+            sbyte[] TBias1 = new sbyte[1 << LOGTAB];
+            sbyte[] TBias2 = new sbyte[1 << LOGTAB];
+            sbyte[] TBias3 = new sbyte[1 << LOGTAB];
+            sbyte[] TBias4 = new sbyte[1 << LOGTAB];
+            sbyte[] TBias5 = new sbyte[1 << LOGTAB];
+            sbyte[] SB0 = new sbyte[1 << LOGTAB];
+            sbyte[] SB1 = new sbyte[1 << LOGTAB];
+            sbyte[] SB2 = new sbyte[1 << LOGTAB];
+            sbyte[] SB3 = new sbyte[1 << LOGTAB];
+            sbyte[] SB4 = new sbyte[1 << LOGTAB];
+            sbyte[] SB5 = new sbyte[1 << LOGTAB];
 
             // global history
             sbyte[] globalHistory = new sbyte[HISTBUFFERLENGTH];
@@ -1096,43 +1095,43 @@ namespace PredictionLogic.Prediction.Predictors
 
             public PREDICTOR()
             {
-                PERC = new sbyte[(1 << LOGSIZEP)][];
+                PERC = new sbyte[1 << LOGSIZEP][];
                 for (int i = 0; i < (1 << LOGSIZEP); i++)
                 {
                     PERC[i] = new sbyte[10 * (1 << GPSTEP)];
                 }
-                PERCLOC = new sbyte[(1 << LOGSIZEL)][];
+                PERCLOC = new sbyte[1 << LOGSIZEL][];
                 for (int i = 0; i < (1 << LOGSIZEL); i++)
                 {
                     PERCLOC[i] = new sbyte[10 * (1 << LPSTEP)];
                 }
-                PERCBACK = new sbyte[(1 << LOGSIZEB)][];
+                PERCBACK = new sbyte[1 << LOGSIZEB][];
                 for (int i = 0; i < (1 << LOGSIZEB); i++)
                 {
                     PERCBACK[i] = new sbyte[10 * (1 << BPSTEP)];
                 }
-                PERCYHA = new sbyte[(1 << LOGSIZEY)][];
+                PERCYHA = new sbyte[1 << LOGSIZEY][];
                 for (int i = 0; i < (1 << LOGSIZEY); i++)
                 {
                     PERCYHA[i] = new sbyte[10 * (1 << YPSTEP)];
                 }
-                PERCPATH = new sbyte[(1 << LOGSIZEP)][];
+                PERCPATH = new sbyte[1 << LOGSIZEP][];
                 for (int i = 0; i < (1 << LOGSIZEP); i++)
                 {
                     PERCPATH[i] = new sbyte[10 * (1 << PPSTEP)];
                 }
-                PERCSLOC = new sbyte[(1 << LOGSIZES)][];
+                PERCSLOC = new sbyte[1 << LOGSIZES][];
                 for (int i = 0; i < (1 << LOGSIZES); i++)
                 {
                     PERCSLOC[i] = new sbyte[10 * (1 << SPSTEP)];
                 }
-                PERCTLOC = new sbyte[(1 << LOGSIZET)][];
+                PERCTLOC = new sbyte[1 << LOGSIZET][];
                 for (int i = 0; i < (1 << LOGSIZET); i++)
                 {
                     PERCTLOC[i] = new sbyte[10 * (1 << TPSTEP)];
                 }
 
-                PERCQLOC = new sbyte[(1 << LOGSIZEQ)][];
+                PERCQLOC = new sbyte[1 << LOGSIZEQ][];
                 for (int i = 0; i < (1 << LOGSIZEQ); i++)
                 {
                     PERCQLOC[i] = new sbyte[10 * (1 << QPSTEP)];
@@ -1605,8 +1604,8 @@ namespace PredictionLogic.Prediction.Predictors
                 subpaths[1] = pathSpectrums[1].subpaths[branchAddress % P1_SPSIZE];	// per-address subpath
                 subpaths[2] = pathSpectrums[2].subpaths[(branchAddress >> P2_PARAM) % P2_SPSIZE];	// per-set subpath
                 subpaths[3] = pathSpectrums[3].subpaths[(branchAddress >> P3_PARAM) % P3_SPSIZE];	// another per-set subpath
-                int f = frequencyBins.find(branchFrequencyTable.getFrequency(branchAddress));
-                subpaths[4] = pathSpectrums[4].subpaths[f];	// frequency subpath 
+                int frequency = frequencyBins.find(branchFrequencyTable.getFrequency(branchAddress));
+                subpaths[4] = pathSpectrums[4].subpaths[frequency];	// frequency subpath 
                 subpaths[5] = pathSpectrums[5].subpaths[0]; // global backward path
 
                 for (int i = 0; i < numberOfTagePredictors; i++)
@@ -2124,14 +2123,12 @@ namespace PredictionLogic.Prediction.Predictors
 
         static MTAGESC()
         {
-            Properties.Add(new PredictorBoolProperty("predictTaken", "Always predict:", "Taken", "Not Taken", true));
         }
 
         private PREDICTOR predictor;
 
-        public MTAGESC(bool predictTaken)
+        public MTAGESC()
         {
-            //predictor = new PREDICTOR();
         }
 
         public bool predictBranch(BranchInfo branch)

@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 using System.Windows;
 
 using OfficeOpenXml;
-using PredictionLogic;
 using PredictionLogic.SimulationStatistics;
 using Microsoft.Win32;
 using PredictionLogic.Prediction;

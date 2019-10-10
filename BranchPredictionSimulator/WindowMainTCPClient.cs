@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 
 using System.Collections.ObjectModel;
-using PredictionLogic;
-using System.IO;
-using System.Net.Sockets;
 using System.Threading;
 
 namespace BranchPredictionSimulator
-{    
+{
     public partial class WindowMain : Window
     {
         public ObservableCollection<TCPSimulatorProxy> TCPConnections = new ObservableCollection<TCPSimulatorProxy>();

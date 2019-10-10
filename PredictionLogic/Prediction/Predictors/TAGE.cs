@@ -1,5 +1,4 @@
 using System;
-using PredictionLogic.Prediction;
 using PredictionLogic.Prediction.PredictorPropertyTypes;
 using System.Collections.Generic;
 

@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace PredictionLogic.Prediction.BenchmarksAndReaders.Stanford
 {
     public class StanfordBranch : IBranch

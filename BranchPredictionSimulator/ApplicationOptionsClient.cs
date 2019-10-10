@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.ComponentModel;
-using System.Runtime.Serialization;
-using System.IO;
-using System.Configuration;
+﻿using System.ComponentModel;
 using PredictionLogic;
 
 namespace BranchPredictionSimulator

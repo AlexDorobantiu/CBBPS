@@ -39,15 +39,14 @@ using System;
 using System.Runtime.Serialization;
 #endif
 
-using ICSharpCode.SharpZipLib;
 
 namespace ICSharpCode.SharpZipLib.BZip2
 {
-	/// <summary>
-	/// BZip2Exception represents exceptions specific to Bzip2 algorithm
-	/// </summary>
+    /// <summary>
+    /// BZip2Exception represents exceptions specific to Bzip2 algorithm
+    /// </summary>
 #if !NETCF_1_0 && !NETCF_2_0
-	[Serializable]
+    [Serializable]
 #endif	
 	public class BZip2Exception : SharpZipBaseException
 	{

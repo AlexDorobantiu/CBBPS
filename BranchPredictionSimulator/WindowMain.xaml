@@ -139,20 +139,18 @@
                          />
             </HeaderedContentControl>
             <DataTemplate.Triggers>
-                <DataTrigger Binding="{Binding Path=IsSelected,
-                                                            RelativeSource={
-                                                            RelativeSource Mode=FindAncestor,
-                                                                            AncestorType={x:Type ListBoxItem}
-                                                            }
-                                                            }" Value="True">
+                <DataTrigger Binding="{ Binding Path=IsSelected,
+                                        RelativeSource={
+                                            RelativeSource Mode=FindAncestor,
+                                            AncestorType={x:Type ListBoxItem}
+                                        }
+                                        }" Value="True">
                     <Setter TargetName="hcc_main" Property="Selector.IsSelected" Value="True"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding ElementName=RootWindow, Path=AppOptions.IsPredictorCompareMode, Mode=OneWay}" 
                              Value="False">
                     <Setter TargetName="cb" Property="Visibility" Value="Collapsed"/>
                 </DataTrigger>
-
-
             </DataTemplate.Triggers>
         </DataTemplate>
 
