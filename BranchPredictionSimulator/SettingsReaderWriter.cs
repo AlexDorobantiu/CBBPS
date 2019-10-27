@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Soap;
 using PredictionLogic;
 using PredictionLogic.Simulation;
+using PredictionLogic.Utils;
 
 namespace BranchPredictionSimulator
 {
@@ -36,7 +37,7 @@ namespace BranchPredictionSimulator
 
         public static void loadApplicationSettingsFromDisk(ApplicationOptionsClient applicationOptions, WindowMain connectionHolder)
         {
-            if (!File.Exists(APP_SETTINGS_FILE_NAME))
+            if (!File.Exists(Path.Combine(ReflectionUtil.getCurrentExeDirectory(), APP_SETTINGS_FILE_NAME)))
             {
                 return;
             }
@@ -45,7 +46,7 @@ namespace BranchPredictionSimulator
 
             try
             {
-                textReader = new XmlTextReader(APP_SETTINGS_FILE_NAME);
+                textReader = new XmlTextReader(Path.Combine(ReflectionUtil.getCurrentExeDirectory(), APP_SETTINGS_FILE_NAME));
                 textReader.Read(); // read declaration
 
                 // read root node
@@ -132,10 +133,10 @@ namespace BranchPredictionSimulator
         {
             try
             {
-                if (File.Exists(SIM_SETTINGS_FILE_NAME))
+                if (File.Exists(Path.Combine(ReflectionUtil.getCurrentExeDirectory(), SIM_SETTINGS_FILE_NAME)))
                 {
                     SimulationOptions simulationOptions = null;
-                    FileStream fileStream = new FileStream(SIM_SETTINGS_FILE_NAME, FileMode.Open);
+                    FileStream fileStream = new FileStream(Path.Combine(ReflectionUtil.getCurrentExeDirectory(), SIM_SETTINGS_FILE_NAME), FileMode.Open);
                     simulationOptions = (SimulationOptions)formatter.Deserialize(fileStream);
                     fileStream.Close();
                     return simulationOptions;
@@ -151,12 +152,12 @@ namespace BranchPredictionSimulator
         public static void saveSettingsToDisk(ApplicationOptionsClient applicationOptions, IEnumerable<TCPSimulatorProxy> tcpConnections, SimulationOptions simulationOptions)
         {
             // 1. simulation settings (soap)
-            FileStream fileStream = new FileStream(SIM_SETTINGS_FILE_NAME, FileMode.OpenOrCreate);
+            FileStream fileStream = new FileStream(Path.Combine(ReflectionUtil.getCurrentExeDirectory(), SIM_SETTINGS_FILE_NAME), FileMode.OpenOrCreate);
             formatter.Serialize(fileStream, simulationOptions);
             fileStream.Close();
 
             // 2. app settings (xml)
-            XmlTextWriter textWriter = new XmlTextWriter(APP_SETTINGS_FILE_NAME, null);
+            XmlTextWriter textWriter = new XmlTextWriter(Path.Combine(ReflectionUtil.getCurrentExeDirectory(), APP_SETTINGS_FILE_NAME), null);
 
             // open the document 
             textWriter.WriteStartDocument();

@@ -57,12 +57,13 @@ namespace PredictionLogic.Prediction.Predictors
 
         int maximumInertia;
         int sum;
+        uint branchIndex;
         bool prediction;
 
-        public SIP3(uint branchLocations, int counterBits, int maximumIntertia, int initialThreshold, int thresholdAdaptBits)
+        public SIP3(uint branchLocations, int counterBits, int maximumInertia, int initialThreshold, int thresholdAdaptBits)
         {
             this.branchLocations = branchLocations;
-            maximumInertia = maximumIntertia;
+            this.maximumInertia = maximumInertia;
             this.initialThreshold = initialThreshold;
             updateThreshold = initialThreshold;
 
@@ -78,8 +79,8 @@ namespace PredictionLogic.Prediction.Predictors
                 adaptThreshold = false;
             }
 
-            states = new int[branchLocations, maximumIntertia];
-            weights = new int[branchLocations, maximumIntertia];
+            states = new int[branchLocations, maximumInertia];
+            weights = new int[branchLocations, maximumInertia];
 
             this.counterBits = counterBits;
             counterMax = (1 << (counterBits - 1)) - 1;
@@ -90,7 +91,7 @@ namespace PredictionLogic.Prediction.Predictors
 
         public bool predictBranch(BranchInfo branch)
         {
-            uint branchIndex = branch.address % branchLocations;
+            branchIndex = branch.address % branchLocations;
 
             sum = 0;
             for (int inertia = 0; inertia < maximumInertia; inertia++)
@@ -113,52 +114,50 @@ namespace PredictionLogic.Prediction.Predictors
         {
             if ((Math.Abs(sum) < updateThreshold) || (prediction != branch.taken()))
             {
-                uint mapare = branch.getBranchInfo().address % branchLocations;
-
                 for (int inertia = 0; inertia < maximumInertia; inertia++)
                 {
                     if (branch.taken())
                     {
-                        if (states[mapare, inertia] >= 0)
+                        if (states[branchIndex, inertia] >= 0)
                         {
-                            if (weights[mapare, inertia] < counterMax)
+                            if (weights[branchIndex, inertia] < counterMax)
                             {
-                                weights[mapare, inertia]++;
+                                weights[branchIndex, inertia]++;
                             }
                         }
                         else
                         {
-                            if (weights[mapare, inertia] > -counterMax - 1)
+                            if (weights[branchIndex, inertia] > -counterMax - 1)
                             {
-                                weights[mapare, inertia]--;
+                                weights[branchIndex, inertia]--;
                             }
                         }
 
-                        if (states[mapare, inertia] < inertia - 1)
+                        if (states[branchIndex, inertia] < inertia - 1)
                         {
-                            states[mapare, inertia]++;
+                            states[branchIndex, inertia]++;
                         }
                     }
                     else
                     {
-                        if (states[mapare, inertia] < 0)
+                        if (states[branchIndex, inertia] < 0)
                         {
-                            if (weights[mapare, inertia] < counterMax)
+                            if (weights[branchIndex, inertia] < counterMax)
                             {
-                                weights[mapare, inertia]++;
+                                weights[branchIndex, inertia]++;
                             }
                         }
                         else
                         {
-                            if (weights[mapare, inertia] > -counterMax - 1)
+                            if (weights[branchIndex, inertia] > -counterMax - 1)
                             {
-                                weights[mapare, inertia]--;
+                                weights[branchIndex, inertia]--;
                             }
                         }
 
-                        if (states[mapare, inertia] > -inertia)
+                        if (states[branchIndex, inertia] > -inertia)
                         {
-                            states[mapare, inertia]--;
+                            states[branchIndex, inertia]--;
                         }
                     }
                 }
