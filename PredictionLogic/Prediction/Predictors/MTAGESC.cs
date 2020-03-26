@@ -1717,13 +1717,13 @@ namespace PredictionLogic.Prediction.Predictors
                     saturatedCounterUpdate(ref FirstBIAS[INDFIRST], branchTaken, perceptronWeightBits);
                     saturatedCounterUpdate(ref TBias0[INDBIAS0], branchTaken, perceptronWeightBits);
                     saturatedCounterUpdate(ref TBias1[INDBIAS1], branchTaken, perceptronWeightBits);
-                    saturatedCounterUpdate(ref TBias2[INDBIAS1], branchTaken, perceptronWeightBits);
+                    saturatedCounterUpdate(ref TBias2[INDBIAS2], branchTaken, perceptronWeightBits);
                     saturatedCounterUpdate(ref TBias3[INDBIAS3], branchTaken, perceptronWeightBits);
                     saturatedCounterUpdate(ref TBias4[INDBIAS4], branchTaken, perceptronWeightBits);
                     saturatedCounterUpdate(ref TBias5[INDBIAS5], branchTaken, perceptronWeightBits);
                     saturatedCounterUpdate(ref SB0[INDSB0], branchTaken, perceptronWeightBits);
                     saturatedCounterUpdate(ref SB1[INDSB1], branchTaken, perceptronWeightBits);
-                    saturatedCounterUpdate(ref SB2[INDSB1], branchTaken, perceptronWeightBits);
+                    saturatedCounterUpdate(ref SB2[INDSB2], branchTaken, perceptronWeightBits);
                     saturatedCounterUpdate(ref SB3[INDSB3], branchTaken, perceptronWeightBits);
                     saturatedCounterUpdate(ref SB4[INDSB4], branchTaken, perceptronWeightBits);
                     saturatedCounterUpdate(ref SB5[INDSB5], branchTaken, perceptronWeightBits);
